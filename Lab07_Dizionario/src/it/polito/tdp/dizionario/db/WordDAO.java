@@ -14,23 +14,26 @@ public class WordDAO {
 	 */
 	public List<String> getAllSimilarWords(String parola, int numeroLettere) {
 		
-		for(int i=0 ; i<parola.length() ; i++){
+		List<String> parole = new ArrayList<String>();
+		
+		for(int i=0 ; i<numeroLettere ; i++){
 			Connection conn = DBConnect.getInstance().getConnection();
 			String sql = "SELECT nome FROM parola WHERE nome LIKE ?;";
 			PreparedStatement st;
 
+
 			try {
 
 				st = conn.prepareStatement(sql);
-				st.setString(1, parola.substring(0, i-1)+"_"+parola.substring(i+1, parola.length()));
+				st.setString(1,parola.substring(0, i)+"_"+parola.substring(i+1, parola.length()));
 				ResultSet res = st.executeQuery();
 
-				List<String> parole = new ArrayList<String>();
-
 				while (res.next())
-					parole.add(res.getString("nome"));
+					if(parola.compareTo(res.getString("nome"))!=0)
+						parole.add(res.getString("nome"));
+				conn.close();
+				
 
-				return parole;
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -39,7 +42,7 @@ public class WordDAO {
 			}
 		}
 		
-		return new ArrayList<String>();
+		return parole;
 	}
 
 	/*

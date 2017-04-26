@@ -18,22 +18,42 @@ public class Model {
 		List<String> parole = dao.getAllWordsFixedLength(numeroLettere);
 		for(String s : parole)
 			grafo.addVertex(s);
-		for(String s : parole){
-			List<String> simili = dao.getAllSimilarWords(s, s.length());
-			for(String st : simili){
-				grafo.addEdge(s, st);
+//		for(String s : parole){
+//			List<String> simili = dao.getAllSimilarWords(s, s.length());
+//			for(String st : simili){
+//				grafo.addEdge(s, st);
+//			}
+//		}
+		for(int i=0 ; i<parole.size() ; i++)
+			for(int j=i+1 ; j<parole.size() ; j++){
+				String prima = parole.get(i);
+				String seconda = parole.get(j);
+				for(int k=0 ; k<numeroLettere ; k++){
+					String prove = seconda.substring(0, k)+"."+seconda.substring(k+1, seconda.length());
+					if(prima.matches(prove))
+						grafo.addEdge(prima, seconda);
+				}
 			}
-		}
+		
 		return new ArrayList<String>();
 	}
 
 	public List<String> displayNeighbours(String parolaInserita) {
-		System.out.println("Model -- TODO");
-		return new ArrayList<String>();
+		List<String> result = new ArrayList<String>();
+		for(String s : grafo.vertexSet())
+			if(grafo.containsEdge(parolaInserita, s))
+				result.add(s);
+		return result;
 	}
 
 	public String findMaxDegree() {
-		System.out.println("Model -- TODO");
-		return "";
+		int max = 0 ;
+		String result = "" ;
+		for(String s : grafo.vertexSet())
+			if(grafo.degreeOf(s)>max){
+				max = grafo.degreeOf(s);
+				result=s ;
+			}
+		return result;
 	}
 }
