@@ -1,6 +1,7 @@
 package it.polito.tdp.dizionario.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.dizionario.model.Model;
@@ -40,7 +41,8 @@ public class DizionarioController {
 	void doGeneraGrafo(ActionEvent event) {
 
 		try {
-			txtResult.setText("Controller -- TODO!");
+			m.createGraph(Integer.parseInt(inputNumeroLettere.getText()));
+			txtResult.setText("Grafo generato!");
 			
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -51,7 +53,7 @@ public class DizionarioController {
 	void doTrovaGradoMax(ActionEvent event) {
 		
 		try {
-			txtResult.setText("Controller -- TODO!");
+			txtResult.appendText(m.findMaxDegree());
 
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -62,8 +64,10 @@ public class DizionarioController {
 	void doTrovaVicini(ActionEvent event) {
 		
 		try {
-			txtResult.setText("Controller -- TODO!");
-
+			List<String> vicini = m.displayNeighbours(inputParola.getText());
+			txtResult.appendText("Le parole simili a quella inserita sono: \n");
+			for(String s : vicini)
+				txtResult.appendText(s+"\n");
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
 		}
