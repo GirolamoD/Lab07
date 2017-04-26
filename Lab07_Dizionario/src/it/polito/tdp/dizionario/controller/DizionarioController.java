@@ -3,6 +3,7 @@ package it.polito.tdp.dizionario.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.dizionario.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +11,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class DizionarioController {
+	
+	Model m ;
 
 	@FXML
 	private ResourceBundle resources;
@@ -30,7 +33,7 @@ public class DizionarioController {
 
 	@FXML
 	void doReset(ActionEvent event) {
-		txtResult.setText("Reset!");
+		txtResult.clear();
 	}
 
 	@FXML
@@ -74,5 +77,9 @@ public class DizionarioController {
 		assert btnGeneraGrafo != null : "fx:id=\"btnGeneraGrafo\" was not injected: check your FXML file 'Dizionario.fxml'.";
 		assert btnTrovaVicini != null : "fx:id=\"btnTrovaVicini\" was not injected: check your FXML file 'Dizionario.fxml'.";
 		assert btnTrovaGradoMax != null : "fx:id=\"btnTrovaTutti\" was not injected: check your FXML file 'Dizionario.fxml'.";
+	}
+
+	public void setModel(Model m) {
+		this.m=m;
 	}
 }
